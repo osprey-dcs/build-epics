@@ -1,4 +1,4 @@
-# Submodule versions (tag if exact, otherwise closest tag) — generated 2026-02-11T13:51:51-05:00
+# Submodule versions (tag if exact, otherwise closest tag) — generated 2026-02-11T14:52:19-05:00
 
 module                                       tag                              commit
 ------------------------------------------------------------------------------------------------
@@ -64,4 +64,4 @@ bundle/libevent                              release-2.1.8-stable-957-g1fe626c4 
 recsync                                      1.8                              4ce38ae81d38
 seq                                          R2-2-9                           e5e361509df1
 sscan                                        R2-11-6                          f03da19eb11a
-stream                                       stream_2_7_14                    d5dc15e321fe
+stream                                       2.8.26                           668d1d525509

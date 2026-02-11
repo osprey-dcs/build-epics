@@ -51,6 +51,36 @@ die() {
 
 cd "$BASEDIR"
 
+# Sanity check: tree must be writable (build creates *.version, config files, tarball)
+if [ ! -w "$BASEDIR" ] || [ ! -w "$BASEDIR/epics-base/configure" ]; then
+    set +x   # stop xtrace for clean user prompt
+
+    echo "ERROR: EPICS tree is not writable." >&2
+    echo "Example permissions:" >&2
+    ls -ld "$BASEDIR" "$BASEDIR/epics-base/configure" >&2 || true
+    echo >&2
+    printf 'Fix by running: chmod -R u+w "%s" ? [y/N] ' "$BASEDIR" >&2
+    read ans || ans=""
+
+    case "$ans" in
+        y|Y|yes|YES)
+            if chmod -R u+w "$BASEDIR" 2>/dev/null; then
+                echo "OK: made tree writable." >&2
+            else
+                echo "ERROR: chmod failed. Try: sudo chmod -R u+w \"$BASEDIR\"." >&2
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Aborting. Make the tree writable and re-run." >&2
+            exit 1
+            ;;
+    esac
+
+    set -x   # restore tracing
+fi
+
+
 perl --version || die "Missing perl"
 g++ --version || die "Missing gcc/g++"
 type re2c || die "Need re2c for sncseq.  Missing PowerTools?"
